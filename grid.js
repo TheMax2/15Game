@@ -50,6 +50,9 @@ Grid.prototype.draw = function(){
     this.arrGrid.forEach(square => {
         this.docGrid.appendChild(square.div);
     });
+    this.arrGrid.forEach(square => {
+        if (square.animation) square.animation.cancel();
+    })
     //console.log(this.gridGrid);
 }
 

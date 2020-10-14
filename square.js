@@ -4,6 +4,7 @@ function Square(number, grid){
     this.grid = grid;
     this.size = 92;
     this.moveSpeed = 80;
+    this.animation;
     this.div = document.createElement("div");
     this.div.classList.add('noselect');
     if (number >= grid.size*grid.size) {
@@ -12,49 +13,71 @@ function Square(number, grid){
         this.div.classList.add("square");
         this.div.innerHTML = number;
         this.div.addEventListener("click", () => {
-            
             if (this.grid.moves === 0) this.grid.timer.start();
             this.tryToMove();
             this.grid.moveSpan.innerHTML = this.grid.moves;
+            if(this.grid.hasWon()) this.grid.win(); 
+        })
+    }
+    if (this.isBlank){
+        var that = this;
+        window.addEventListener("keydown", function(event) {
+            if (this.grid.moves === 0) this.grid.timer.start();
+            if (event.code=="ArrowUp"||event.code=="ArrowDown"||
+                event.code=="ArrowLeft"||event.code=="ArrowRight"){
+                event.preventDefault();
+            }
+            // Keys are inverted because it is more intuative this way
+            if (event.code=="ArrowUp") that.tryDown();
+            if (event.code=="ArrowDown") that.tryUp();
+            if (event.code=="ArrowLeft") that.tryRight();
+            if (event.code=="ArrowRight") that.tryLeft();
+            if (event.code=="Enter") that.grid.shuffle();
+            if (event.code=="KeyT") {
+                console.log("testing");
+
+            }
+            
+            this.grid.moveSpan.innerHTML = this.grid.moves;
             if(this.grid.hasWon()) this.grid.win();
             
-        })
+          }, true);
     }
 }
 
 Square.prototype.animateUp = function() {
     var that = this;
-    this.div.animate([
+    this.animation = this.div.animate([
         { transform: 'translateY(-'+this.size+'px)' },
-    ], this.moveSpeed)
-    .onfinish = function() {
+    ], this.moveSpeed);
+    this.animation.onfinish = function() {
         that.grid.draw();
-    };
+    }
 }
 Square.prototype.animateDown = function() {
     var that = this;
-    this.div.animate([
+    this.animation = this.div.animate([
         { transform: 'translateY('+this.size+'px)' },
-    ], this.moveSpeed)
-    .onfinish = function() {
+    ], this.moveSpeed);
+    this.animation.onfinish = function() {
         that.grid.draw();
     };
 }
 Square.prototype.animateRight = function() {
     var that = this;
-    this.div.animate([
+    this.animation = this.div.animate([
         { transform: 'translateX('+this.size+'px)' },
-    ], this.moveSpeed)
-    .onfinish = function() {
+    ], this.moveSpeed);
+    this.animation.onfinish = function() {
         that.grid.draw();
     };
 }
 Square.prototype.animateLeft = function() {
     var that = this;
-    this.div.animate([
+    this.animation = this.div.animate([
         { transform: 'translateX(-'+this.size+'px)' },
-    ], this.moveSpeed)
-    .onfinish = function() {
+    ], this.moveSpeed);
+    this.animation.onfinish = function() {
         that.grid.draw();
     };
 }
@@ -87,41 +110,73 @@ Square.prototype.moveRight = function() {
 Square.prototype.tryUp = function() {
     if (this.position.y <= 0) return false;
     var p = this.position;
-    var otherSquare = this.grid.gridGrid[p.y-1][p.x];
-    if (otherSquare.isBlank){
-        this.moveUp(); 
+    if (this.isBlank){
+        this.grid.gridGrid[p.y-1][p.x].moveDown();
         return true;
     } 
+    for (var i=p.y-1; i>=0; i--){
+        var otherSquare = this.grid.gridGrid[i][p.x];
+        if (otherSquare.isBlank){
+            for (var j=i+1; j<=p.y; j++){
+                this.grid.gridGrid[j][p.x].moveUp();       
+            }
+            return true;
+        } 
+    }
     return false;
 }
 Square.prototype.tryDown = function() {
     if (this.position.y >= this.grid.size-1) return false;
     var p = this.position;
-    var otherSquare = this.grid.gridGrid[p.y+1][p.x];
-    if (otherSquare.isBlank){
-        this.moveDown();
+    if (this.isBlank){
+        this.grid.gridGrid[p.y+1][p.x].moveUp();
         return true;
     } 
+    for (var i=p.y+1; i<=this.grid.size-1; i++){
+        var otherSquare = this.grid.gridGrid[i][p.x];
+        if (otherSquare.isBlank){
+            for (var j=i-1; j>=p.y; j--){
+                this.grid.gridGrid[j][p.x].moveDown();       
+            }
+            return true;
+        } 
+    }
     return false;
 }
 Square.prototype.tryLeft = function() {
     if (this.position.x <= 0) return false;
     var p = this.position;
-    var otherSquare = this.grid.gridGrid[p.y][p.x-1];
-    if (otherSquare.isBlank){
-        this.moveLeft();
+    if (this.isBlank){
+        this.grid.gridGrid[p.y][p.x-1].moveRight();
         return true;
     } 
+    for (var i=p.x-1; i>=0; i--){
+        var otherSquare = this.grid.gridGrid[p.y][i];
+        if (otherSquare.isBlank){
+            for (var j=i+1; j<=p.x; j++){
+                this.grid.gridGrid[p.y][j].moveLeft();       
+            }
+            return true;
+        } 
+    }
     return false;
 }
 Square.prototype.tryRight = function() {
     if (this.position.x >= this.grid.size-1) return false;
     var p = this.position;
-    var otherSquare = this.grid.gridGrid[p.y][p.x+1];
-    if (otherSquare.isBlank){
-        this.moveRight();
+    if (this.isBlank){
+        this.grid.gridGrid[p.y][p.x+1].moveLeft();
         return true;
     } 
+    for (var i=p.x+1; i<=this.grid.size-1; i++){
+        var otherSquare = this.grid.gridGrid[p.y][i];
+        if (otherSquare.isBlank){
+            for (var j=i-1; j>=p.x; j--){
+                this.grid.gridGrid[p.y][j].moveRight();       
+            }
+            return true;
+        } 
+    }
     return false;
 }
 
