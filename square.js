@@ -3,9 +3,9 @@ function Square(number, grid){
     this.position = {x:(number-1)%grid.size, y:Math.floor((number-1)/grid.size)};
     this.grid = grid;
     this.size = 92;
-    this.moveSpeed = 40;
+    this.moveSpeed = 80;
     this.div = document.createElement("div");
-    
+    this.div.classList.add('noselect');
     if (number >= grid.size*grid.size) {
         this.isBlank = true;
     } else {
@@ -13,6 +13,7 @@ function Square(number, grid){
         this.div.innerHTML = number;
         this.div.addEventListener("click", () => {
             this.tryToMove();
+            if(this.grid.hasWon()) console.log("You Win!");
         })
     }
 }
@@ -55,22 +56,22 @@ Square.prototype.animateLeft = function() {
 }
 
 Square.prototype.moveUp = function() {
-    this.animateUp();
+    if (this.grid.animation) this.animateUp();
     var p = this.position;
     this.swap(this.grid.gridGrid[p.y-1][p.x]);
 }
 Square.prototype.moveDown = function() {
-    this.animateDown();
+    if (this.grid.animation) this.animateDown();
     var p = this.position;
     this.swap(this.grid.gridGrid[p.y+1][p.x]);
 }
 Square.prototype.moveLeft = function() {
-    this.animateLeft();
+    if (this.grid.animation) this.animateLeft();
     var p = this.position;
     this.swap(this.grid.gridGrid[p.y][p.x-1]);
 }
 Square.prototype.moveRight = function() {
-    this.animateRight();
+    if (this.grid.animation) this.animateRight();
     var p = this.position;
     this.swap(this.grid.gridGrid[p.y][p.x+1]);
 }
@@ -133,4 +134,25 @@ Square.prototype.swap = function(otherSquare){
     var op = otherSquare.position;
     this.grid.gridGrid[op.y][op.x] = otherSquare;
     this.grid.gridGrid[tp.y][tp.x] = this;
+}
+
+// uses the last (empty square) to shuffle the entire board
+Square.prototype.shuffle = function(){
+    if (!this.isBlank) return;
+    var iterations = 1000 * grid.size;
+    for (var i=0; i<iterations; i++){
+        var rand = Math.floor(Math.random() * 4);
+        var p = this.position;
+        if        (rand === 0 && !(this.position.y <= 0)){ // up
+            this.grid.gridGrid[p.y-1][p.x].tryToMove();
+        } else if (rand === 1 && !(this.position.y >= this.grid.size-1)){ // down
+            this.grid.gridGrid[p.y+1][p.x].tryToMove();
+        } else if (rand === 2 && !(this.position.x <= 0)){ // left
+            this.grid.gridGrid[p.y][p.x-1].tryToMove();
+        } else if (rand === 3 && !(this.position.x >= this.grid.size-1)){ // right
+            this.grid.gridGrid[p.y][p.x+1].tryToMove();;
+        }
+    }
+    
+    this.grid.draw();
 }

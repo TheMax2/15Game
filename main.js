@@ -1,21 +1,14 @@
 console.log("connected to main");
 
-function main(){
-    var grid = new Grid(4);
-    
+var gridSize = 3;
+var grid;
 
+function main(){
+    grid = new Grid(gridSize);
+    document.getElementById('shuffle').addEventListener("click", shuffle);
 }
 main();
 
-
-
-// //AnimationEffect
-// div.animate([
-//     // keyframes
-//     { transform: 'translateY(0px)' }, 
-//     { transform: 'translateY(100px)' }
-//   ], { 
-//     // timing options
-//     duration: 1000,
-//     iterations: Infinity
-//   });
+function shuffle(){
+    grid.shuffle();
+}

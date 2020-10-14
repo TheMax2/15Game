@@ -2,11 +2,18 @@ function Grid(size){
     this.size = size;
     this.arrGrid = new Array(size*size);
     this.docGrid = document.getElementById("grid");
-    for (var i = 1; i <= 16; i++){
+    this.animation = true;
+    var docGridString = "";
+    for (var i=0; i<size; i++){
+        docGridString += " 1fr";
+    }
+    this.docGrid.style.gridTemplateColumns = docGridString;
+    this.docGrid.style.gridTemplateRows = docGridString;
+    for (var i = 1; i <= size*size; i++){
         var square = new Square(i, this);
         this.arrGrid[i-1] = square;
     }
-    console.log(this.arrGrid);
+    //console.log(this.arrGrid);
     this.gridGrid = this.getGrid();
     this.draw();
 }
@@ -39,6 +46,24 @@ Grid.prototype.draw = function(){
     this.arrGrid.forEach(square => {
         this.docGrid.appendChild(square.div);
     });
-    console.log(this.gridGrid);
+    //console.log(this.gridGrid);
+}
+
+// shuffles the board
+Grid.prototype.shuffle = function(){
+    this.animation = false;
+    this.arrGrid.forEach(square => {square.shuffle()});
+    this.animation = true;
+}
+
+Grid.prototype.hasWon = function(){
+    var res = true;
+    this.refreshArr(); //should already be refreshed but just in case.
+    var i = 1;
+    this.arrGrid.forEach(square => {
+        if (square.number != i) res = false;
+        i++;
+    });
+    return res;
 }
 
