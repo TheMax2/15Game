@@ -7,11 +7,17 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h2>15 Game</h2>
-    <table> 
+    <h2 id="title">15 Game</h2>
+    
+    <br>
+    <table id="content"> 
         <tr>
             <td>
-                <div class=game>
+                <div id="stats">
+                    <div><span>Time: <span id="minutes">00</span>:<span id="seconds">00</span>:<span id="miliseconds">00</span></span></div>
+                    <div><span>Moves: <span id="moves">0</span></span></div>
+                </div>
+                <div id="game">
                     <div id="grid" style="
 
                         display: grid;
@@ -20,15 +26,25 @@
                     </div>
                 </div>
                 <button id="shuffle">Shuffle</button>
+                <span id="sizeLabel">Grid Size:</span>
+                <input id="size" type="number" min="3" max="10" value="4">
+                <button id="size-btn">></button>
             </td>
-            <td>
-                <div class=leaderboard>
-
+            <td id="lead">
+                <div id="leaderboard">
+                    <table align="left"
+                        cellspacing="5" cellpadding="8">
+                        <tr>
+                            <td align="left"><b>Player</b></td>
+                            <td align="left"><b>Score</b></td>
+                        </tr>
+                    </table>
                 </div>
             </td>
         </tr>
     </table>
     <script src="square.js"></script>
+    <script src="timer.js"></script>
     <script src="grid.js"></script>
     <script src="main.js"></script>
     

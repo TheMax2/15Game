@@ -12,8 +12,12 @@ function Square(number, grid){
         this.div.classList.add("square");
         this.div.innerHTML = number;
         this.div.addEventListener("click", () => {
+            
+            if (this.grid.moves === 0) this.grid.timer.start();
             this.tryToMove();
-            if(this.grid.hasWon()) console.log("You Win!");
+            this.grid.moveSpan.innerHTML = this.grid.moves;
+            if(this.grid.hasWon()) this.grid.win();
+            
         })
     }
 }
@@ -59,21 +63,25 @@ Square.prototype.moveUp = function() {
     if (this.grid.animation) this.animateUp();
     var p = this.position;
     this.swap(this.grid.gridGrid[p.y-1][p.x]);
+    this.grid.moves++;
 }
 Square.prototype.moveDown = function() {
     if (this.grid.animation) this.animateDown();
     var p = this.position;
     this.swap(this.grid.gridGrid[p.y+1][p.x]);
+    this.grid.moves++;
 }
 Square.prototype.moveLeft = function() {
     if (this.grid.animation) this.animateLeft();
     var p = this.position;
     this.swap(this.grid.gridGrid[p.y][p.x-1]);
+    this.grid.moves++;
 }
 Square.prototype.moveRight = function() {
     if (this.grid.animation) this.animateRight();
     var p = this.position;
     this.swap(this.grid.gridGrid[p.y][p.x+1]);
+    this.grid.moves++;
 }
 
 Square.prototype.tryUp = function() {
