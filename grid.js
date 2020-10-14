@@ -9,7 +9,7 @@ function Grid(size){
     this.shuffled = false;
     var docGridString = "";
     for (var i=0; i<size; i++){
-        docGridString += " 1fr";
+        docGridString += " 120px";
     }
     this.docGrid.style.gridTemplateColumns = docGridString;
     this.docGrid.style.gridTemplateRows = docGridString;

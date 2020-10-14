@@ -31,11 +31,28 @@ body{
 #grid{
     background-color:rgb(187, 187, 187);
     border-radius: 10px;
+
+    
+}
+
+#game{
+    display: flex;
+
+    margin: 0 auto;
+    justify-content: center;
+}
+
+#leftSide{
+    padding:auto;
+    text-align: center;
+}
+
+#controls{
+    margin-left:0;
+    padding-left: 0;
 }
 
 .square{
-    height: 100px;
-    width: 100px;
     font-family: 'Pacifico-Regular';
     text-align: center;
     padding: 10px;
@@ -85,7 +102,8 @@ body{
 }
 
 #stats div{
-    margin-left: 100px;
+    margin-left: 50px;
+    margin-right:50px;
     font-size: 24px;
 }
 
