@@ -4,7 +4,8 @@ function Square(number, grid){
     this.grid = grid;
     this.size = 92;
     this.moveSpeed = 80;
-    this.animation;
+    this.animation = new Animation();
+    
     this.div = document.createElement("div");
     this.div.classList.add('noselect');
     if (number >= grid.size*grid.size) {
@@ -13,18 +14,20 @@ function Square(number, grid){
         this.div.classList.add("square");
         this.div.innerHTML = number;
         this.div.addEventListener("click", () => {
+            if (!this.grid.shuffled) return;
             if (this.grid.moves === 0) this.grid.timer.start();
             this.tryToMove();
             this.grid.moveSpan.innerHTML = this.grid.moves;
-            if(this.grid.hasWon()) this.grid.win(); 
+            
         })
     }
     if (this.isBlank){
         var that = this;
         window.addEventListener("keydown", function(event) {
-            if (this.grid.moves === 0) this.grid.timer.start();
+            if (!that.grid.shuffled) return;
             if (event.code=="ArrowUp"||event.code=="ArrowDown"||
-                event.code=="ArrowLeft"||event.code=="ArrowRight"){
+                    event.code=="ArrowLeft"||event.code=="ArrowRight"){
+                if (this.grid.moves === 0) this.grid.timer.start();
                 event.preventDefault();
             }
             // Keys are inverted because it is more intuative this way
@@ -35,11 +38,9 @@ function Square(number, grid){
             if (event.code=="Enter") that.grid.shuffle();
             if (event.code=="KeyT") {
                 console.log("testing");
-
+                
             }
-            
             this.grid.moveSpan.innerHTML = this.grid.moves;
-            if(this.grid.hasWon()) this.grid.win();
             
           }, true);
     }
@@ -50,36 +51,36 @@ Square.prototype.animateUp = function() {
     this.animation = this.div.animate([
         { transform: 'translateY(-'+this.size+'px)' },
     ], this.moveSpeed);
-    this.animation.onfinish = function() {
-        that.grid.draw();
-    }
+    this.controlAnimation();
 }
 Square.prototype.animateDown = function() {
     var that = this;
     this.animation = this.div.animate([
         { transform: 'translateY('+this.size+'px)' },
     ], this.moveSpeed);
-    this.animation.onfinish = function() {
-        that.grid.draw();
-    };
+    this.controlAnimation();
 }
 Square.prototype.animateRight = function() {
     var that = this;
     this.animation = this.div.animate([
         { transform: 'translateX('+this.size+'px)' },
     ], this.moveSpeed);
-    this.animation.onfinish = function() {
-        that.grid.draw();
-    };
+    this.controlAnimation();
 }
 Square.prototype.animateLeft = function() {
     var that = this;
     this.animation = this.div.animate([
         { transform: 'translateX(-'+this.size+'px)' },
     ], this.moveSpeed);
+    this.controlAnimation();
+}
+
+Square.prototype.controlAnimation = function(){
+    var that = this;
     this.animation.onfinish = function() {
         that.grid.draw();
-    };
+        if(that.grid.hasWon()) that.grid.win();
+    }
 }
 
 Square.prototype.moveUp = function() {

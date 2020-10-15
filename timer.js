@@ -53,5 +53,9 @@ Timer.prototype.pad = function(val) {
 }
 
 Timer.prototype.getTime = function(){
-    return this.pad(parseInt(this.time / 60))+":"+this.pad(this.time % 60);
+    return this.time;
+}
+
+Timer.prototype.getTimeString = function(){
+    return this.pad(parseInt(Math.floor(this.time/100) / 60))+":"+this.pad(Math.floor(this.time/100) % 60)+":"+this.pad(this.time % 100);
 }

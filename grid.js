@@ -56,9 +56,10 @@ Grid.prototype.draw = function(){
     //console.log(this.gridGrid);
 }
 
-// shuffles the board
-Grid.prototype.shuffle = function(){
+// shuffles the board and resets the game
+Grid.prototype.start = function(){
     
+    document.getElementById("winPanel").style.visibility = "hidden";
     this.shuffled = true;
     this.animation = false;
     this.arrGrid.forEach(square => {square.shuffle()});
@@ -82,11 +83,11 @@ Grid.prototype.hasWon = function(){
 }
 
 Grid.prototype.win = function(){
+    document.getElementById("winPanel").style.visibility = "visible";
+    document.getElementById("finalTime").innerHTML = "Time: " + this.timer.getTimeString();
+    document.getElementById("finalMoves").innerHTML = "Moves: " + this.moves;
     console.log("Player has won!");
     this.timer.pause();
     this.shuffled = false;
 }
 
-Grid.prototype.delete = function(){
-
-}

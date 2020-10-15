@@ -14,12 +14,13 @@ function main(){
     grid = new Grid(gridSize);
     document.getElementById('size').value = gridSize;
     document.getElementById('shuffle').addEventListener("click", shuffle);
+    document.getElementById('playAgain').addEventListener("click", shuffle);
     document.getElementById('size-btn').addEventListener("click", recreateGrid);
 }
 main();
 
 function shuffle(){
-    grid.shuffle();
+    grid.start();
 }
 
 function recreateGrid(){

@@ -15,6 +15,11 @@
 	font-style: normal;
 }
 
+
+button, input{
+    outline:none; 
+}
+
 body{
     background-color: #eeeeee;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -65,13 +70,19 @@ body{
     border-radius: 10px;
 }
 
-#shuffle{
+#shuffle, #playAgain{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     padding: 20px;
     background-color:rgb(209, 166, 85);
     font-size: 24px;
     border-radius: 10px;
     margin-top: 10px;
+}
+
+#playAgain{
+    position: absolute;
+    right:10px;
+    bottom: 10px;
 }
 
 #lead{
@@ -82,7 +93,7 @@ body{
     
     padding-left: 30px;
     font-size: 24px;
-    color: brown;
+    color: rgb(187, 36, 36);
 }
 
 #content td{
@@ -96,7 +107,7 @@ body{
 #stats{
     display: flex;
     padding: 20px;
-    color: brown;
+    color: rgb(187, 36, 36);
     font-weight: bold;
 
 }
@@ -121,5 +132,70 @@ body{
     margin-top: 10px;
 }
 
+#instructions{
+    height:118px;
+    width: 636px;
+    background-image: url('res/15GameInstruct.png');
+    margin: auto;
+}
+
+#winPanel{
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    padding: 10px;
+
+    background-color: rgb(235, 221, 196);
+    border: 1px solid rgb(44, 28, 3);
+    color:rgb(44, 28, 3);
+    font-size: 32px;
+    font-weight: bold;
+    border-radius: 10px;
+
+    width: 600px;
+    height: 350px;
+    
+    
+
+    justify-content: center; 
+    text-align: center;
+      
+}
+
+#winPanel span{
+    font-size: 24px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: rgb(187, 36, 36);
+}
+
+#winMsg{
+    font-family: 'Pacifico-Regular';
+    margin: auto;
+    margin-top: 10px;
+}
+
+#highScore{
+    font-size:32px;
+    color:rgb(44, 28, 3);
+}
+#highScore h4{
+    margin-bottom:7px;
+    margin-top: 20px;
+}
+#highScore input{
+
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color:rgb(187, 187, 187);
+    font-size: 24px;
+    border-radius: 10px;
+    margin:0px;
+    width:250px;
+    height: 25px;
+    outline:none; 
+}
 
 
