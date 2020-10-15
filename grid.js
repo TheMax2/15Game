@@ -89,17 +89,20 @@ Grid.prototype.draw = function(){
  * Shuffles the board and starts or restarts the game
  */
 Grid.prototype.start = function(){
-    // resets moves to 0
-    this.moves = 0;
-    document.getElementById("moves").innerHTML = 0;
+    
     // hides win panel
     document.getElementById("winPanel").style.visibility = "hidden";
+    document.getElementById("highScore").style.visibility = "hidden";
+    document.getElementById("playAgain").style.visibility = "hidden";
     // shuffles board. animation should be turned off.
     this.shuffled = true;
     var temp = this.animation;
     this.animation = false;
     this.arrGrid.forEach(square => {square.shuffle()});
     this.animation = temp;
+    // resets moves to 0
+    this.moves = 0;
+    document.getElementById("moves").innerHTML = 0;
     // resets timer
     this.timer.stop();
     
@@ -126,14 +129,24 @@ Grid.prototype.hasWon = function(){
  * Wins the game.
  */
 Grid.prototype.win = function(){
-    // displays the win panel
-    document.getElementById("winPanel").style.visibility = "visible";
-    document.getElementById("finalTime").innerHTML = "Time: " + this.timer.getTimeString();
+    
+    document.getElementById("score").value = this.timer.getTimeString();
     document.getElementById("finalMoves").innerHTML = "Moves: " + this.moves;
     console.log("Player has won!");
     // stops timer
     this.timer.pause();
     // makes it impossible to win again until board is reshuffled
     this.shuffled = false;
+
+    // displays the win panel
+    document.getElementById("winPanel").style.visibility = "visible";
+    var lowestHS = "00:25:24"; // this will be taken from the database;
+    if (this.timer.getTimeString() < lowestHS){
+        document.getElementById("highScore").style.visibility = "visible";
+        document.getElementById("playAgain").style.visibility = "hidden";
+    } else {
+        document.getElementById("playAgain").style.visibility = "visible";
+    }
+    
 }
 

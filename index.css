@@ -70,7 +70,7 @@ body{
     border-radius: 10px;
 }
 
-#shuffle, #playAgain{
+#shuffle, .highscoreBtn{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     padding: 20px;
     background-color:rgb(209, 166, 85);
@@ -79,7 +79,7 @@ body{
     margin-top: 10px;
 }
 
-#playAgain{
+.highscoreBtn{
     position: absolute;
     right:10px;
     bottom: 10px;
@@ -186,7 +186,7 @@ body{
     margin-bottom:7px;
     margin-top: 20px;
 }
-#highScore input{
+#userName{
 
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color:rgb(187, 187, 187);
@@ -198,4 +198,26 @@ body{
     outline:none; 
 }
 
+#score{
+    font-weight: bold;
+    background: none;
+    width: 150px;
+    border:none;
+    font-size: 24px;
+    color: rgb(187, 36, 36);
+}
 
+.hidden{
+    display: none;
+    visibility: hidden;
+}
+
+.visible{
+    display: block;
+    visibility: visible;
+}
+
+p{
+    margin-top: 10;
+    margin-bottom: 0;
+}

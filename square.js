@@ -41,10 +41,11 @@ function Square(number, grid){
             if (event.code=="ArrowDown") this.tryUp();
             if (event.code=="ArrowLeft") this.tryRight();
             if (event.code=="ArrowRight") this.tryLeft();
-            if (event.code=="Enter") this.grid.shuffle();
+            if (event.code=="Enter") this.grid.start();
             // put functions to test here
             if (event.code=="KeyT") {
                 console.log("testing");
+                
             }
             // displays moves
             document.getElementById("moves").innerHTML = this.grid.moves;

@@ -7,18 +7,26 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <!-- style="visibility: hidden;" -->
     <div id="winPanel" style="visibility: hidden;">
         <h3 id="winMsg">You Win!</h3>
-        <div id="winInfo">
-            <span id="finalTime">Time: 00:00:00 </span>
+        <div id="winInfo" >
+            <span>Time: <input id="score" name="score" disabled value=""></input> </span> 
             <span id="finalMoves"> Moves: 0</span>
         </div>
-        <div id="highScore" hidden>
-            <h4>New High Score</h4>
-            Enter Name:
-            <input type="text" maxlength="15" spellcheck="false">
+        <div id="highScore" style="visibility: hidden;">
+            <form action="">
+                <h4>New High Score!</h4>
+                <p>
+                    Enter Name:
+                    <input id="userName" type="text" name="player" size="30" maxlength="20" value=""/>
+                </p>
+                <p>
+                    <input class="highscoreBtn" type="submit" name="submit" value="Enter"/>
+                </p>
+            </form>
         </div>
-        <button id="playAgain">Play Again</button>
+        <button class="highscoreBtn" id="playAgain">Play Again</button>
     </div>
     <h2 id="title">15 Game</h2>
     
